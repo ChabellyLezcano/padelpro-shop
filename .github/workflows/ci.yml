@@ -1,0 +1,43 @@
+name: CI Pipeline
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      # 🔍 ESLint + Tailwind plugin validation
+      - name: Run ESLint
+        run: npm run lint
+
+      # 🎨 Prettier formatting consistency check
+      - name: Run Prettier check
+        run: npm run format -- --check
+
+      # 🧹 TailwindCSS lint (class order, duplicates, non-existent classes)
+      - name: Run Tailwind lint
+        run: npm run tailwind:lint
+
+      # 🗑️ Detect unused components (TypeScript + ts-prune)
+      - name: Check unused components
+        run: npm run check-unused
+
+      # ✅ Unit tests execution
+      - name: Run Tests
+        run: npm test
