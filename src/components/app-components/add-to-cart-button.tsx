@@ -19,10 +19,6 @@ type AddToCartButtonProps = {
   quantity?: number
   className?: string
   iconOnly?: boolean
-  /**
-   * "add" → add to cart (default)
-   * "notify" → notify me (no add to cart)
-   */
   variant?: "add" | "notify"
 }
 
