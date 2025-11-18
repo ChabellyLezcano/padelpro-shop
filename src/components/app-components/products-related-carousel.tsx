@@ -1,25 +1,12 @@
-// src/components/app-components/products-related-carousel.tsx
 "use client"
 
 import { useRef } from "react"
 import Link from "next/link"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 
-import {
-  ProductCard,
-  type ProductDiscount,
-} from "@/components/app-components/product-card"
+import { ProductCard } from "@/components/app-components/product-card"
 import { Button } from "@/components/ui/button"
-
-type RelatedProduct = {
-  id: string
-  name: string
-  slug: string
-  price: number
-  image_url: string | null
-  stock?: number
-  product_discounts?: ProductDiscount[] | null
-}
+import type { RelatedProduct } from "@/types/product"
 
 type RelatedProductsCarouselProps = {
   products: RelatedProduct[]
@@ -74,17 +61,8 @@ export function RelatedProductsCarousel({
           <div className="mx-auto flex w-full max-w-5xl gap-4">
             {products.map((p) => (
               <div key={p.id} className="max-w-[280px] min-w-[220px] flex-1">
-                <ProductCard
-                  product={{
-                    id: p.id,
-                    name: p.name,
-                    slug: p.slug,
-                    price: p.price,
-                    stock: p.stock ?? 0,
-                    image_url: p.image_url,
-                    product_discounts: p.product_discounts ?? [],
-                  }}
-                />
+                {/* p es RelatedProduct → compatible con ProductCardBase */}
+                <ProductCard product={p} />
               </div>
             ))}
           </div>
@@ -151,17 +129,7 @@ export function RelatedProductsCarousel({
                 key={p.id}
                 className="max-w-[260px] min-w-[220px] flex-1 sm:min-w-60 md:min-w-[260px]"
               >
-                <ProductCard
-                  product={{
-                    id: p.id,
-                    name: p.name,
-                    slug: p.slug,
-                    price: p.price,
-                    stock: p.stock ?? 0,
-                    image_url: p.image_url,
-                    product_discounts: p.product_discounts ?? [],
-                  }}
-                />
+                <ProductCard product={p} />
               </div>
             ))}
           </div>

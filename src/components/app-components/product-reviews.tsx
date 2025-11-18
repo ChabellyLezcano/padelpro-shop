@@ -1,20 +1,12 @@
 // src/components/app-components/product-reviews.tsx
 import { Star } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
-
-type Review = {
-  id: string
-  rating: number
-  title: string | null
-  comment: string | null
-  created_at: string
-}
+import type { Review } from "@/types/review"
 
 type ProductReviewsProps = {
   reviews: Review[]
 }
 
-// Deterministic date formatter to avoid hydration mismatches
 const MONTHS_SHORT = [
   "Jan",
   "Feb",

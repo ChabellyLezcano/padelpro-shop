@@ -9,27 +9,12 @@ import { getProductImageUrl } from "@/lib/images"
 import { Card, CardContent } from "@/components/ui/card"
 import { AddToCartButton } from "./add-to-cart-button"
 
-export type ProductDiscount = {
-  discount_type: "percentage" | "fixed"
-  discount_value: number
-  is_active?: boolean
-  starts_at?: string | null
-  ends_at?: string | null
-}
+// 👇 Importamos el tipo base, no Product
+import type { ProductCardBase } from "@/types/product"
 
-type Product = {
-  id: string
-  name: string
-  slug: string
-  price: number
-  stock: number
-  image_url: string | null
-  product_discounts?: ProductDiscount[] | null
-}
-
-export function ProductCard({ product }: { product: Product }) {
+export function ProductCard({ product }: { product: ProductCardBase }) {
   const imageUrl = getProductImageUrl(product.image_url)
-  const inStock = product.stock > 0
+  const inStock = (product.stock ?? 0) > 0
 
   const discount = product.product_discounts?.[0]
 

@@ -12,49 +12,13 @@ import { ProductReviews } from "@/components/app-components/product-reviews"
 import { RelatedProductsCarousel } from "@/components/app-components/products-related-carousel"
 import { AddToCartButton } from "@/components/app-components/add-to-cart-button"
 
+import type { Product } from "@/types/product"
+
 type PageProps = {
   params: Promise<{ slug: string }>
 }
 
-type ProductDiscount = {
-  discount_type: "percentage" | "fixed"
-  discount_value: number
-  is_active?: boolean
-  starts_at?: string | null
-  ends_at?: string | null
-}
-
-type Review = {
-  id: string
-  rating: number
-  title: string | null
-  comment: string | null
-  created_at: string
-}
-
 type ProductAttributes = Record<string, unknown>
-
-type Product = {
-  id: string
-  name: string
-  slug: string
-  description: string | null
-  price: number
-  stock: number
-  image_url: string | null
-  brand_id: string | null
-  category_id: string | null
-  attributes?: ProductAttributes | null
-  brands?: {
-    name: string
-  } | null
-  categories?: {
-    name: string
-    slug: string
-  } | null
-  product_discounts?: ProductDiscount[] | null
-  product_reviews?: Review[] | null
-}
 
 async function getProductBySlug(slug: string): Promise<Product | null> {
   const { data, error } = await supabaseServer
@@ -108,7 +72,7 @@ async function getRelatedProducts(
 
   const { data, error } = await supabaseServer
     .from("products")
-    .select("id, name, slug, price, image_url, category_id")
+    .select("id, name, slug, price, image_url, stock, category_id")
     .eq("category_id", categoryId)
     .neq("id", currentProductId)
     .order("name", { ascending: true })
@@ -451,7 +415,7 @@ export default async function ProductPage({ params }: PageProps) {
             slug: p.slug,
             price: p.price,
             image_url: p.image_url,
-            stock: 0,
+            stock: p.stock,
             product_discounts: [],
           }))}
         />

@@ -59,9 +59,8 @@ export default function RootLayout({
             </main>
 
             <footer className="border-t bg-white">
-              <div className="mx-auto max-w-6xl px-4 py-4 text-xs text-slate-500">
-                © {new Date().getFullYear()} PadelPro Shop. All rights
-                reserved.
+              <div className="mx-auto flex max-w-6xl items-center justify-center px-4 py-4 text-xs text-slate-500">
+                PadelPro Shop is created by Chabelly Lezcano
               </div>
             </footer>
           </div>
